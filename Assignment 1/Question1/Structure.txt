@@ -2,3 +2,31 @@ restful_api/
 │
 ├── service.bal
 └── client.bal
+
+
+service /programmes on new http:Listener(8080) {
+   
+    resource function post programmes(http:Caller caller, http:Request req) {
+        // Logic to add a new programme
+    }
+    
+    resource function get programmes(http:Caller caller) {
+        // Logic to fetch all programmes
+    }
+    
+    resource function get programmes/[programmeCode](http:Caller caller, string programmeCode) {
+        // Logic to fetch a specific programme
+    }
+    
+    resource function get programmes/[programmeCode]/courses(http:Caller caller, string programmeCode) {
+        // Logic to fetch courses for a programme
+    }
+
+    resource function put programmes/[programmeCode](http:Caller caller, string programmeCode, http:Request req) {
+        // Logic to update a programme
+    }
+
+    resource function delete programmes/[programmeCode](http:Caller caller, string programmeCode) {
+        // Logic to delete a programme
+    }
+}

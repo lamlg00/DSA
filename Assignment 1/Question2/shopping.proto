@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package shopping;
+
+service ShoppingService {
+    rpc AddProduct (AddProductRequest) returns (AddProductResponse);
+    rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse);
+    rpc RemoveProduct (RemoveProductRequest) returns (RemoveProductResponse);
+    rpc ListAvailableProducts (ListAvailableProductsRequest) returns (ListAvailableProductsResponse);
+    rpc SearchProduct (SearchProductRequest) returns (SearchProductResponse);
+    rpc AddToCart (AddToCartRequest) returns (AddToCartResponse);
+    rpc PlaceOrder (PlaceOrderRequest) returns (PlaceOrderResponse);
+    rpc CreateUsers (stream CreateUserRequest) returns (CreateUserResponse);
+}
+
+message AddProductRequest {
+    string name = 1;
+    string description = 2;
+    double price = 3;
+    int32 stock_quantity = 4;
+    string sku = 5;
+    bool status = 6; // true for available, false for out of stock
+}
+
+message AddProductResponse {
+    string product_code = 1;
+}
+
+message UpdateProductRequest {
+    string sku = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+    int32 stock_quantity = 5;
+    bool status = 6;
+}
+
+message UpdateProductResponse {
+    string message = 1;
+}
+
+message RemoveProductRequest {
+    string sku = 1;
+}
+
+message RemoveProductResponse {
+    repeated Product products = 1;
+}
+
+message ListAvailableProductsRequest {}
+
+message ListAvailableProductsResponse {
+    repeated Product products = 1;
+}
+
+message SearchProductRequest {
+    string sku = 1;
+}
+
+message SearchProductResponse {
+    Product product = 1;
+    string message = 2; // Message if not found
+}
+
+message AddToCartRequest {
+    string user_id = 1;
+    string sku = 2;
+}
+
+message AddToCartResponse {
+    string message = 1;
+}
+
+message PlaceOrderRequest {
+    string user_id = 1;
+}
+
+message PlaceOrderResponse {
+    string order_id = 1;
+}
+
+message CreateUserRequest {
+    string user_id = 1;
+    string user_type = 2; // "customer" or "admin"
+}
+
+message CreateUserResponse {
+    string message = 1;
+}
+
+message Product {
+    string name = 1;
+    string description = 2;
+    double price = 3;
+    int32 stock_quantity = 4;
+    string sku = 5;
+    bool status = 6;
+}

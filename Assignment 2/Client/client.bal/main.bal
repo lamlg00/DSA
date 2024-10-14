@@ -1,10 +1,6 @@
-import ballerina/http;
 import ballerina/io;
 
-// Define the endpoint of the logistics service
-final string LOGISTICS_SERVICE_URL = "http://localhost:8080/logistics/scheduleDelivery";
-
-// Struct to hold shipment information
+// Define the shipment request and customer records
 type ShipmentRequest record {
     string shipmentType;
     string pickupLocation;
@@ -19,12 +15,8 @@ type Customer record {
     string contactNumber;
 };
 
-// Create the HTTP client to communicate with the logistics service
-http:Client logisticsClient = check new(LOGISTICS_SERVICE_URL);
-
 public function main() {
-
-    // Get customer input for the shipment
+    // Get user input
     io:println("Enter shipment type (standard, express, international): ");
     string shipmentType = io:readln();
     
@@ -59,15 +51,6 @@ public function main() {
         }
     };
 
-    // Send the shipment request to the logistics service
-    var response = logisticsClient->post("/", shipmentRequest);
-
-    // Handle the response from the logistics service
-    if (response is http:Response) {
-        json jsonResponse = check response.getJsonPayload();
-        io:println("Shipment request was successfully processed.");
-        io:println("Response: ", jsonResponse.toString());
-    } else {
-        io:println("Failed to contact the logistics service. Error: ", response.toString());
-    }
+    // Output the shipment request for debugging purposes
+    io:println("Shipment Request: ", shipmentRequest.toString());
 }
